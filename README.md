@@ -1,0 +1,1 @@
+# ricro-apps-manager
