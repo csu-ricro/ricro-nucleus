@@ -34,7 +34,6 @@ class PermRequest extends Component {
     open: false
   };
   handleDialogToggle = () => {
-    console.log('fired');
     this.setState({
       open: !this.state.open
     });

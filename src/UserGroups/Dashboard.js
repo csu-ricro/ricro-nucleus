@@ -14,10 +14,10 @@ import Tabs, {
 import List from 'material-ui/List';
 
 import CsuDashboard from '../CsuDashboard';
-import UserListItem from './UserListItem';
-import users from '../testData/users.json';
+import UserGroupListItem from './UserGroupListItem';
+import groups from '../testData/userGroups.json';
 
-const styleSheet = createStyleSheet('Dashboard', theme => ({
+const styleSheet = createStyleSheet('Users', theme => ({
   tabsRoot: {
     height: 'initial',
   },
@@ -31,7 +31,7 @@ function createTabShowcase(showcase) {
   );
 }
 
-class Dashboard extends Component {
+class Users extends Component {
   state = {
     index: 0,
   };
@@ -48,7 +48,7 @@ class Dashboard extends Component {
   render() {
     const classes = this.props.classes;
     return (
-      <CsuDashboard title='Users'>
+      <CsuDashboard title='User Groups'>
         <Tabs
           index={this.state.index}
           onChange={this.handleChange}
@@ -58,8 +58,8 @@ class Dashboard extends Component {
           >
           <Tab
             classes={{root: classes.tabsRoot}}
-            icon={createTabShowcase(users.length)}
-            label='users'
+            icon={createTabShowcase(groups.length)}
+            label='user groups'
             />
         </Tabs>
         <SwipeableViews
@@ -69,7 +69,7 @@ class Dashboard extends Component {
           >
           <div>
             <List>
-              {users.map((user)=><UserListItem key={user.eId} user={user}/>)}
+              {groups.map((group)=><UserGroupListItem key={group.user_group_type_id} edit group={group}/>)}
             </List>
           </div>
         </SwipeableViews>
@@ -78,8 +78,8 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
+Users.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styleSheet)(Dashboard);
+export default withStyles(styleSheet)(Users);
