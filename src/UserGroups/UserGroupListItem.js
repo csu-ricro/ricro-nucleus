@@ -34,7 +34,6 @@ class GroupListItem extends Component {
     open: false
   };
   handleDialogToggle = () => {
-    console.log('fired');
     this.setState({
       open: !this.state.open
     });
@@ -42,7 +41,6 @@ class GroupListItem extends Component {
   render() {
     const classes = this.props.classes;
     const group = this.props.group;
-    console.log(this.props);
     return (
       <ListItem button onClick={this.handleDialogToggle}>
         {this.props.edit ?

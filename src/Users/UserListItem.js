@@ -20,13 +20,11 @@ class UserListItem extends Component {
     open: false
   };
   handleDialogToggle = () => {
-    console.log('fired');
     this.setState({
       open: !this.state.open
     });
   };
   render() {
-    console.log(this.props.user);
     const user = this.props.user;
     return (
       <div>
