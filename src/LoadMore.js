@@ -102,15 +102,15 @@ class LoadMore extends Component {
 
     return (
       <div className={classes.wrapper + ' row'}>
-        {loading && <LinearProgress color='accent' size={60} className={classes.progress} />}
-        <Button
-          className={classes.button + ' center-block ' + buttonClass}
-          onClick={this.handleButtonClick}
-          disabled={this.state.disabled}
-          >
-          {success ? <Icon>check</Icon> : <Icon>expand_more</Icon>}
-        </Button>
-      </div>
+      {loading && <LinearProgress color='accent' size={60} className={classes.progress} />}
+      <Button
+        className={classes.button + ' center-block ' + buttonClass}
+        onClick={this.handleButtonClick}
+        disabled={this.state.disabled}
+        >
+        {success ? <Icon>check</Icon> : <Icon>expand_more</Icon>}
+      </Button>
+    </div>
     );
   }
 }

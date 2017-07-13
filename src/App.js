@@ -2,13 +2,13 @@ import React, {
   Component
 } from 'react';
 
-import Users from './Users/Users';
+import UsersDashboard from './Users/Dashboard';
 
 class App extends Component {
   render() {
     return (
       <main>
-        <Users />
+        <UsersDashboard />
       </main>
     );
   }
