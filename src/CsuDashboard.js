@@ -24,7 +24,7 @@ TabContainer.propTypes = {
 
 const styleSheet = createStyleSheet('CsuDashboard', theme => ({
   card: {
-    maxWidth: 775,
+    // maxWidth: 775,
   },
   cardHeaderRoot: {
     backgroundColor: theme.palette.primary[500],

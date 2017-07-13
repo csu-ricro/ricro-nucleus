@@ -15,7 +15,7 @@ import Icon from 'material-ui/Icon';
 import List from 'material-ui/List';
 
 import CsuDialog from '../CsuDialog';
-import GroupListItem from '../UserGroups/GroupListItem';
+import UserGroupListItem from '../UserGroups/UserGroupListItem';
 import defaultProfileImg from '../assets/images/default-profile.png';
 
 const styleSheet = createStyleSheet('EditUser', theme => ({
@@ -50,7 +50,7 @@ class EditUser extends Component {
         open={this.props.open}
         onRequestClose={this.props.handleDialogToggle}
         dialogActions={dialogActions}
-        title='User Account'
+        title='Edit User Account'
         >
         <div className='row'>
           <Avatar
@@ -129,7 +129,7 @@ class EditUser extends Component {
         <List>
           <Divider/>
           {user.userGroups.map((group)=>
-            <GroupListItem
+            <UserGroupListItem
               key={group.user_group_type_id}
               group={group}
               listItemSecondaryAction={deleteGroup}

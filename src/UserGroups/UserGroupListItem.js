@@ -18,7 +18,10 @@ import Dialog, {
   DialogTitle,
   DialogActions
 } from 'material-ui/Dialog';
+import Icon from 'material-ui/Icon';
+import IconButton from 'material-ui/IconButton';
 
+import EditUserGroup from './EditUserGroup';
 
 const styleSheet = createStyleSheet('GroupListItem', theme => ({
   dialog: {
@@ -39,9 +42,17 @@ class GroupListItem extends Component {
   render() {
     const classes = this.props.classes;
     const group = this.props.group;
+    console.log(this.props);
     return (
       <ListItem button onClick={this.handleDialogToggle}>
-        <Dialog
+        {this.props.edit ?
+          (<EditUserGroup
+            group={group}
+            open={this.state.open}
+            handleDialogToggle={this.handleDialogToggle}
+            />)
+          :
+        (<Dialog
           classes={{paper: classes.dialog}}
           open={this.state.open}
           onRequestClose={this.handleDialogToggle}
@@ -53,11 +64,20 @@ class GroupListItem extends Component {
           <DialogActions>
             <Button onClick={this.handleDialogToggle}>close</Button>
           </DialogActions>
-        </Dialog>
+        </Dialog>)
+      }
         <ListItemText primary={group.alias} secondary={group.name} />
         {this.props.listItemSecondaryAction ?
           <ListItemSecondaryAction>
             {this.props.listItemSecondaryAction}
+          </ListItemSecondaryAction>
+          : null
+        }
+        {this.props.edit ?
+          <ListItemSecondaryAction>
+            <IconButton aria-label='Edit' onClick={this.handleDialogToggle}>
+              <Icon>edit</Icon>
+            </IconButton>
           </ListItemSecondaryAction>
           : null
         }
@@ -69,6 +89,7 @@ class GroupListItem extends Component {
 GroupListItem.propTypes = {
   classes: PropTypes.object.isRequired,
   group: PropTypes.object.isRequired,
+  edit: PropTypes.bool,
   listItemSecondaryAction: PropTypes.node,
 };
 
