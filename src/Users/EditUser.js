@@ -35,6 +35,7 @@ class EditUser extends Component {
   render() {
     const classes = this.props.classes;
     const user = this.props.user;
+    user.userGroups = user.userGroups ? user.userGroups : [];
     const dialogActions = (
       <div>
         <Button raised color='primary' className='text-center'>add group</Button>

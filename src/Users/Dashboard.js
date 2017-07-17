@@ -1,7 +1,8 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 import PropTypes from 'prop-types';
+import $ from 'jquery';
 import SwipeableViews from 'react-swipeable-views';
 import {
   withStyles,
@@ -13,14 +14,22 @@ import Tabs, {
 } from 'material-ui/Tabs';
 import List from 'material-ui/List';
 import Icon from 'material-ui/Icon';
+import {
+  CircularProgress
+} from 'material-ui/Progress';
 
 import CsuDashboard from '../CsuDashboard';
+import TabContainer from '../TabContainer';
 import UserListItem from './UserListItem';
-import users from '../testData/users.json';
+import apiCall from '../apiCall';
 
-const styleSheet = createStyleSheet('Dashboard', theme => ({
+const styleSheet = createStyleSheet('UsersDashboard', theme => ({
   tabsRoot: {
     height: 'initial',
+  },
+  progress: {
+    margin: '30px auto',
+    display: 'block',
   },
 }));
 
@@ -32,20 +41,38 @@ function createTabShowcase(showcase) {
   );
 }
 
-class Dashboard extends Component {
+
+class UsersDashboard extends PureComponent {
   state = {
     index: 0,
+    loadingUsers: true,
+    users: [],
   };
+
   handleChange = (event, index) => {
     this.setState({
       index
     });
   };
+
   handleChangeIndex = index => {
     this.setState({
       index
     });
   };
+
+  componentDidMount() {
+    $.when(apiCall('/user/')).done((data) => {
+      console.log(data);
+      $('#users-loading').slideUp('fast', () => {
+        this.setState({
+          loadingUsers: !this.state.loadingUsers,
+          users: data.result,
+        });
+      })
+    });
+  }
+
   render() {
     const classes = this.props.classes;
     return (
@@ -64,7 +91,7 @@ class Dashboard extends Component {
             />
           <Tab
             classes={{root: classes.tabsRoot}}
-            icon={createTabShowcase(users.length)}
+            icon={createTabShowcase(this.state.users.length)}
             label='users'
             />
           <Tab
@@ -78,32 +105,33 @@ class Dashboard extends Component {
           onChangeIndex={this.handleChangeIndex}
           animateHeight
           >
-          <div style={{padding: 24}}>
+          <TabContainer>
             <Typography type='display1'>
               Users
             </Typography>
             <Typography type='body1'>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </Typography>
-          </div>
-          <div>
+          </TabContainer>
+          <TabContainer>
+            <CircularProgress id='users-loading' className={classes.progress} size={75} />
             <List>
-              {users.map((user)=><UserListItem key={user.eId} user={user}/>)}
+              {this.state.users.map((user)=><UserListItem key={user.eId} user={user}/>)}
             </List>
-          </div>
-          <div>
+          </TabContainer>
+          <TabContainer>
             <Typography className='text-center' type='headline'>
               Coming Soon!
             </Typography>
-          </div>
+          </TabContainer>
         </SwipeableViews>
       </CsuDashboard>
     );
   }
 }
 
-Dashboard.propTypes = {
+UsersDashboard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styleSheet)(Dashboard);
+export default withStyles(styleSheet)(UsersDashboard);
