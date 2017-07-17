@@ -22,7 +22,7 @@ const muiTheme = createMuiTheme({
 
 ReactDOM.render(
   <MuiThemeProvider theme={muiTheme}>
-    <AppContainer config={config}>
+    <AppContainer config={config} style={{marginBottom: 215}}>
       <App/>
     </AppContainer>
   </MuiThemeProvider>,

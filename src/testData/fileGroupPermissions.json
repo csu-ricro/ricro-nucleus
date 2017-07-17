@@ -1,0 +1,29 @@
+[{
+    "file_group_type": {
+      "file_group_type_id": 0,
+      "alias": "alias",
+      "name": "name",
+      "description": "description"
+    },
+    "user_group_type": {
+      "user_group_type_id": 0,
+      "alias": "alias",
+      "name": "name",
+      "description": "description"
+    }
+  },
+  {
+    "file_group_type": {
+      "file_group_type_id": 1,
+      "alias": "alias",
+      "name": "name",
+      "description": "description"
+    },
+    "user_group_type": {
+      "user_group_type_id": 2,
+      "alias": "alias",
+      "name": "name",
+      "description": "description"
+    }
+  }
+]

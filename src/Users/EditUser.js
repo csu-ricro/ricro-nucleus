@@ -15,7 +15,7 @@ import Icon from 'material-ui/Icon';
 import List from 'material-ui/List';
 
 import CsuDialog from '../CsuDialog';
-import UserGroupListItem from '../UserGroups/UserGroupListItem';
+import UserGroupListItem from '../DatabaseTypes/UserGroupListItem';
 import defaultProfileImg from '../assets/images/default-profile.png';
 
 const styleSheet = createStyleSheet('EditUser', theme => ({
@@ -37,7 +37,8 @@ class EditUser extends Component {
     const user = this.props.user;
     const dialogActions = (
       <div>
-        <Button color='accent'>deactive account</Button>
+        <Button raised color='primary' className='text-center'>add group</Button>
+        <Button color='accent'>clear groups</Button>
       </div>
     );
     const deleteGroup = (
@@ -136,7 +137,6 @@ class EditUser extends Component {
               />
           )}
         </List>
-        <Button raised className='text-center'>Add Group</Button>
       </CsuDialog>
     );
   }
