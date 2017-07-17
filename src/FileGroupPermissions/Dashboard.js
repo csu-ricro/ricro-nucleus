@@ -7,16 +7,16 @@ import {
   withStyles,
   createStyleSheet
 } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
 import Tabs, {
   Tab
 } from 'material-ui/Tabs';
+import Typography from 'material-ui/Typography';
 import List from 'material-ui/List';
 import Icon from 'material-ui/Icon';
 
 import CsuDashboard from '../CsuDashboard';
-import UserListItem from './UserListItem';
-import users from '../testData/users.json';
+import FileGroupListItem from './FileGroupListItem';
+import groups from '../testData/fileGroupPermissions.json';
 
 const styleSheet = createStyleSheet('Dashboard', theme => ({
   tabsRoot: {
@@ -49,11 +49,11 @@ class Dashboard extends Component {
   render() {
     const classes = this.props.classes;
     return (
-      <CsuDashboard title='Users'>
+      <CsuDashboard title='File Group Permissions'>
         <Tabs
           index={this.state.index}
           onChange={this.handleChange}
-          textColor="primary"
+          textColor='primary'
           fullWidth
           centered
           >
@@ -64,13 +64,8 @@ class Dashboard extends Component {
             />
           <Tab
             classes={{root: classes.tabsRoot}}
-            icon={createTabShowcase(users.length)}
-            label='users'
-            />
-          <Tab
-            classes={{root: classes.tabsRoot}}
-            icon={createTabShowcase(0)}
-            label='requests'
+            icon={createTabShowcase(groups.length)}
+            label='file groups'
             />
         </Tabs>
         <SwipeableViews
@@ -80,7 +75,7 @@ class Dashboard extends Component {
           >
           <div style={{padding: 24}}>
             <Typography type='display1'>
-              Users
+              File Group Permissions
             </Typography>
             <Typography type='body1'>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -88,13 +83,8 @@ class Dashboard extends Component {
           </div>
           <div>
             <List>
-              {users.map((user)=><UserListItem key={user.eId} user={user}/>)}
+              {groups.map((group, i)=><FileGroupListItem key={i} edit group={group}/>)}
             </List>
-          </div>
-          <div>
-            <Typography className='text-center' type='headline'>
-              Coming Soon!
-            </Typography>
           </div>
         </SwipeableViews>
       </CsuDashboard>
