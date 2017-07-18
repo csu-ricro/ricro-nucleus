@@ -8,20 +8,22 @@ import {
   withStyles,
   createStyleSheet
 } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
 import Tabs, {
   Tab
 } from 'material-ui/Tabs';
-import List from 'material-ui/List';
-import Icon from 'material-ui/Icon';
 import {
   CircularProgress
 } from 'material-ui/Progress';
+import Typography from 'material-ui/Typography';
+import List from 'material-ui/List';
+import Icon from 'material-ui/Icon';
+import Button from 'material-ui/Button';
 
 import CsuDashboard from '../CsuDashboard';
 import TabContainer from '../TabContainer';
 import UserListItem from './UserListItem';
-import apiCall from '../apiCall';
+import AddUser from './AddUser';
+import apiCall from '../utils/apiCall';
 
 const styleSheet = createStyleSheet('UsersDashboard', theme => ({
   tabsRoot: {
@@ -30,6 +32,9 @@ const styleSheet = createStyleSheet('UsersDashboard', theme => ({
   progress: {
     margin: '30px auto',
     display: 'block',
+  },
+  flex: {
+    flex: 1,
   },
 }));
 
@@ -47,36 +52,69 @@ class UsersDashboard extends PureComponent {
     index: 0,
     loadingUsers: true,
     users: [],
+    addUser: {
+      open: false,
+    },
   };
 
   handleChange = (event, index) => {
     this.setState({
-      index
+      index,
     });
   };
 
   handleChangeIndex = index => {
     this.setState({
-      index
+      index,
     });
   };
 
-  componentDidMount() {
+  handleUserDialogToggle = () => {
+    this.setState({
+      addUser: {
+        open: !this.state.addUser.open,
+      },
+    });
+  }
+
+  loadUsers = () => {
+    $('#users-loading').slideDown('fast', () => {
+      this.setState({
+        loadingUsers: true,
+      });
+    });
     $.when(apiCall('/user/')).done((data) => {
       console.log(data);
       $('#users-loading').slideUp('fast', () => {
         this.setState({
-          loadingUsers: !this.state.loadingUsers,
+          loadingUsers: false,
           users: data.result,
         });
       })
     });
   }
 
+  componentDidMount() {
+    this.loadUsers();
+    this.setState({
+      loadingUsers: false,
+    });
+  }
+
   render() {
     const classes = this.props.classes;
     return (
-      <CsuDashboard title='Users'>
+      <CsuDashboard
+        title='Users'
+        cardActions={
+          <Button color='primary' onClick={this.handleUserDialogToggle}>add user</Button>
+        }
+        alignCARight
+        >
+        <AddUser
+          open={this.state.addUser.open}
+          handleDialogToggle={this.handleUserDialogToggle}
+          />
         <Tabs
           index={this.state.index}
           onChange={this.handleChange}
@@ -93,6 +131,7 @@ class UsersDashboard extends PureComponent {
             classes={{root: classes.tabsRoot}}
             icon={createTabShowcase(this.state.users.length)}
             label='users'
+            onClick={this.loadUsers}
             />
           <Tab
             classes={{root: classes.tabsRoot}}

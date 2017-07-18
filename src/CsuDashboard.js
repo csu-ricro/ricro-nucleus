@@ -32,6 +32,9 @@ const styleSheet = createStyleSheet('CsuDashboard', theme => ({
   cardHeaderContent: {
     color: theme.palette.common.white,
   },
+  flex: {
+    flex: 1,
+  },
 }));
 
 class CsuDashboard extends Component {
@@ -67,6 +70,7 @@ class CsuDashboard extends Component {
         </CardContent>
         {this.props.cardActions ?
           <CardActions>
+            {this.props.alignCARight ? <div className={classes.flex}/> : null}
             {this.props.cardActions}
           </CardActions>
           : null
@@ -80,6 +84,7 @@ CsuDashboard.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   cardActions: PropTypes.node,
+  alignCARight: PropTypes.bool,
 };
 
 export default withStyles(styleSheet)(CsuDashboard);

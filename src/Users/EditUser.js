@@ -38,7 +38,7 @@ class EditUser extends Component {
     user.userGroups = user.userGroups ? user.userGroups : [];
     const dialogActions = (
       <div>
-        <Button raised color='primary' className='text-center'>add group</Button>
+        <Button raised color='primary'>add group</Button>
         <Button color='accent'>clear groups</Button>
       </div>
     );
@@ -99,7 +99,6 @@ class EditUser extends Component {
             <TextField
               label='eID'
               defaultValue={user.eId.toString()}
-              helperText='Updated automaticly on login'
               marginForm
               fullWidth
               disabled
@@ -147,6 +146,7 @@ EditUser.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   handleDialogToggle: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styleSheet)(EditUser);
