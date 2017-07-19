@@ -35,6 +35,7 @@ class UserListItem extends Component {
           user={user}
           open={this.state.open}
           handleDialogToggle={this.handleDialogToggle}
+          updateUsers={this.props.updateUsers}
           />
         <ListItem button onClick={this.handleDialogToggle}>
           <ListItemAvatar>
@@ -60,6 +61,7 @@ class UserListItem extends Component {
 
 UserListItem.propTypes = {
   user: PropTypes.object.isRequired,
+  updateUsers: PropTypes.func.isRequired,
 };
 
 export default UserListItem;

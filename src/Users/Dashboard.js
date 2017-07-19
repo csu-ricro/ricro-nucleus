@@ -12,7 +12,7 @@ import Tabs, {
   Tab
 } from 'material-ui/Tabs';
 import {
-  CircularProgress
+  LinearProgress
 } from 'material-ui/Progress';
 import Typography from 'material-ui/Typography';
 import List from 'material-ui/List';
@@ -30,8 +30,7 @@ const styleSheet = createStyleSheet('UsersDashboard', theme => ({
     height: 'initial',
   },
   progress: {
-    margin: '30px auto',
-    display: 'block',
+    marginTop: '-20px',
   },
   flex: {
     flex: 1,
@@ -77,7 +76,7 @@ class UsersDashboard extends PureComponent {
     });
   }
 
-  loadUsers = () => {
+  updateUsers = () => {
     $('#users-loading').slideDown('fast', () => {
       this.setState({
         loadingUsers: true,
@@ -95,7 +94,7 @@ class UsersDashboard extends PureComponent {
   }
 
   componentDidMount() {
-    this.loadUsers();
+    this.updateUsers();
     this.setState({
       loadingUsers: false,
     });
@@ -114,6 +113,7 @@ class UsersDashboard extends PureComponent {
         <AddUser
           open={this.state.addUser.open}
           handleDialogToggle={this.handleUserDialogToggle}
+          updateUsers={this.updateUsers}
           />
         <Tabs
           index={this.state.index}
@@ -131,7 +131,7 @@ class UsersDashboard extends PureComponent {
             classes={{root: classes.tabsRoot}}
             icon={createTabShowcase(this.state.users.length)}
             label='users'
-            onClick={this.loadUsers}
+            onClick={this.updateUsers}
             />
           <Tab
             classes={{root: classes.tabsRoot}}
@@ -153,9 +153,9 @@ class UsersDashboard extends PureComponent {
             </Typography>
           </TabContainer>
           <TabContainer>
-            <CircularProgress id='users-loading' className={classes.progress} size={75} />
+            <LinearProgress id='users-loading' className={classes.progress} />
             <List>
-              {this.state.users.map((user)=><UserListItem key={user.eId} user={user}/>)}
+              {this.state.users.map((user)=><UserListItem key={user.eId} user={user} updateUsers={this.updateUsers}/>)}
             </List>
           </TabContainer>
           <TabContainer>

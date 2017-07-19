@@ -3,34 +3,14 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import $ from 'jquery';
-import {
-  withStyles,
-  createStyleSheet
-} from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
-import Snackbar from 'material-ui/Snackbar';
 
 import CsuDialog from '../CsuDialog';
+import CsuSnackbar from '../CsuSnackbar';
 import apiCall from '../utils/apiCall';
 
 let inputTimeout = null;
-
-const styleSheet = createStyleSheet('AddUser', theme => ({
-  success: {
-    '&>div': {
-      backgroundColor: '#4caf50',
-    }
-  },
-  error: {
-    '&>div': {
-      backgroundColor: theme.palette.error.A700,
-    }
-  },
-  default: {
-    '&>div': {},
-  },
-}));
 
 class AddUser extends Component {
   state = {
@@ -56,7 +36,7 @@ class AddUser extends Component {
     });
   }
 
-  addUser = () => {
+  addUser = (updateUsers) => {
     console.log('adding user');
     $.when(apiCall('/user/create/', {
       data: {
@@ -69,6 +49,7 @@ class AddUser extends Component {
       if (data.status === 'success') {
         message = 'User successfully added';
         className = 'success';
+        updateUsers();
         this.setState({
           eId: {
             ...this.state.eId,
@@ -136,7 +117,6 @@ class AddUser extends Component {
   }
 
   render() {
-    const classes = this.props.classes;
     return (
       <CsuDialog
         open={this.props.open}
@@ -144,7 +124,7 @@ class AddUser extends Component {
         dialogActions={
           <Button
             raised
-            onClick={this.addUser}
+            onClick={this.addUser.bind(this, this.props.updateUsers)}
             disabled={!this.state.eId.status}
             color='primary'
             >
@@ -167,15 +147,11 @@ class AddUser extends Component {
               />
           </div>
         </div>
-        <Snackbar
-          classes={{root: classes[this.state.snackbar.className]}}
+        <CsuSnackbar
+          className={this.state.snackbar.className}
           open={this.state.snackbar.open}
-          autoHideDuration={6e3}
           onRequestClose={this.handleSnackbarClose}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id='message-id'>{this.state.snackbar.message}</span>}
+          message={this.state.snackbar.message}
           />
       </CsuDialog>
     );
@@ -185,6 +161,7 @@ class AddUser extends Component {
 AddUser.propTypes = {
   handleDialogToggle: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
+  updateUsers: PropTypes.func.isRequired,
 };
 
-export default withStyles(styleSheet)(AddUser);
+export default AddUser;
