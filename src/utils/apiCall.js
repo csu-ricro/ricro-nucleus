@@ -1,7 +1,11 @@
 import $ from 'jquery';
 
 function complete(data) {
-  console.log('complete', data);
+  console.log(
+    'COMPLETE:',
+    JSON.parse(data.responseText), '|',
+    data
+  );
   return data;
 }
 

@@ -27,7 +27,9 @@ class UserListItem extends Component {
   render() {
     const user = this.props.user;
     const eId = user.eId.toString().replace(/(.{3})/g, '$1 ');
-    const username = user.last_name == null ? 'Data will be updated on login' : user.first_name + ' ' + user.last_name;
+    const username = (user.last_name == null || user.first_name == null) ?
+      'Data will be updated on login' :
+      user.last_name + ', ' + user.first_name;
     const userSubheader = user.eName == null ? eId : eId + ' • ' + user.eName;
     return (
       <div>

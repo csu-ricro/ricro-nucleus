@@ -83,7 +83,6 @@ class UsersDashboard extends PureComponent {
       });
     });
     $.when(apiCall('/user/')).done((data) => {
-      console.log(data);
       $('#users-loading').slideUp('fast', () => {
         this.setState({
           loadingUsers: false,

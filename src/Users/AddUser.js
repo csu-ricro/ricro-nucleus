@@ -37,7 +37,6 @@ class AddUser extends Component {
   }
 
   addUser = (updateUsers) => {
-    console.log('adding user');
     $.when(apiCall('/user/create/', {
       data: {
         eId: this.state.eId.value,
@@ -64,7 +63,6 @@ class AddUser extends Component {
           className,
         },
       });
-      console.log(data);
     });
   }
 
@@ -84,7 +82,6 @@ class AddUser extends Component {
       let error = value.length > 0 ? true : false;
       if (value.match(/^\d{9}$/g)) {
         $.when(apiCall('/user/?eId=' + value)).done((data) => {
-          console.log(data);
           if (data.status === 'nodata') {
             status = true;
             helperText = 'Valid and unique eID';

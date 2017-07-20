@@ -10,14 +10,10 @@ import {
 import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import Icon from 'material-ui/Icon';
-import List from 'material-ui/List';
 
 import CsuDialog from '../CsuDialog';
 import CsuSnackbar from '../CsuSnackbar';
-import UserGroupListItem from '../DatabaseTypes/UserGroupListItem';
+import ManageGroups from './ManageGroups';
 import defaultProfileImg from '../assets/images/default-profile.png';
 import apiCall from '../utils/apiCall';
 
@@ -59,7 +55,6 @@ class EditUser extends Component {
     clearTimeout(inputTimeout);
     inputTimeout = setTimeout(() => {
       if (user[target.id] !== target.value) {
-        console.log('adding user');
         $.when(apiCall('/user/update/', {
           data: {
             eId: user.eId,
@@ -81,7 +76,6 @@ class EditUser extends Component {
               className,
             },
           });
-          console.log(data);
         });
       }
     }, 500, target, user, updateUsers);
@@ -91,22 +85,10 @@ class EditUser extends Component {
     const classes = this.props.classes;
     const user = this.props.user;
     user.userGroups = user.userGroups ? user.userGroups : [];
-    const dialogActions = (
-      <div>
-        <Button raised color='primary'>add group</Button>
-        <Button color='accent'>clear groups</Button>
-      </div>
-    );
-    const deleteGroup = (
-      <IconButton aria-label='Delete group'>
-        <Icon>delete</Icon>
-      </IconButton>
-    );
     return (
       <CsuDialog
         open={this.props.open}
         onRequestClose={this.props.handleDialogToggle}
-        dialogActions={dialogActions}
         title='Edit User Account'
         >
         <div className='row'>
@@ -184,16 +166,11 @@ class EditUser extends Component {
               />
           </div>
         </div>
-        <List>
-          <Divider/>
-          {user.userGroups.map((group)=>
-            <UserGroupListItem
-              key={group.user_group_type_id}
-              group={group}
-              listItemSecondaryAction={deleteGroup}
-              />
-          )}
-        </List>
+        <Divider/>
+        <ManageGroups
+          user={user}
+          updateUsers={this.props.updateUsers}
+          />
         <CsuSnackbar
           className={this.state.snackbar.className}
           open={this.state.snackbar.open}
