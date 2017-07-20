@@ -26,12 +26,18 @@ class UserListItem extends Component {
   };
   render() {
     const user = this.props.user;
+    const eId = user.eId.toString().replace(/(.{3})/g, '$1 ');
+    const username = (user.last_name == null || user.first_name == null) ?
+      'Data will be updated on login' :
+      user.last_name + ', ' + user.first_name;
+    const userSubheader = user.eName == null ? eId : eId + ' • ' + user.eName;
     return (
       <div>
         <EditUser
           user={user}
           open={this.state.open}
           handleDialogToggle={this.handleDialogToggle}
+          updateUsers={this.props.updateUsers}
           />
         <ListItem button onClick={this.handleDialogToggle}>
           <ListItemAvatar>
@@ -41,8 +47,8 @@ class UserListItem extends Component {
               />
           </ListItemAvatar>
           <ListItemText
-            primary={user.first_name + ' ' + user.last_name}
-            secondary={user.eId + ' • ' + user.eName}
+            primary={username}
+            secondary={userSubheader}
             />
           <ListItemSecondaryAction>
             <IconButton aria-label='Edit' onClick={this.handleDialogToggle}>
@@ -57,6 +63,7 @@ class UserListItem extends Component {
 
 UserListItem.propTypes = {
   user: PropTypes.object.isRequired,
+  updateUsers: PropTypes.func.isRequired,
 };
 
 export default UserListItem;

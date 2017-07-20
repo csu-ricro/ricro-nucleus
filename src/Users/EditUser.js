@@ -2,6 +2,7 @@ import React, {
   Component
 } from 'react';
 import PropTypes from 'prop-types';
+import $ from 'jquery';
 import {
   withStyles,
   createStyleSheet
@@ -9,14 +10,12 @@ import {
 import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import Icon from 'material-ui/Icon';
-import List from 'material-ui/List';
 
 import CsuDialog from '../CsuDialog';
-import UserGroupListItem from '../DatabaseTypes/UserGroupListItem';
+import CsuSnackbar from '../CsuSnackbar';
+import ManageGroups from './ManageGroups';
 import defaultProfileImg from '../assets/images/default-profile.png';
+import apiCall from '../utils/apiCall';
 
 const styleSheet = createStyleSheet('EditUser', theme => ({
   avatar: {
@@ -31,26 +30,65 @@ const styleSheet = createStyleSheet('EditUser', theme => ({
   },
 }));
 
+let inputTimeout = null;
+
 class EditUser extends Component {
+  state = {
+    snackbar: {
+      open: false,
+      message: 'notification',
+      className: 'default',
+    },
+  }
+
+  handleSnackbarClose = () => {
+    this.setState({
+      snackbar: {
+        ...this.state.snackbar,
+        open: false,
+      },
+    });
+  }
+
+  editUser = (user, updateUsers, event) => {
+    let target = event.target;
+    clearTimeout(inputTimeout);
+    inputTimeout = setTimeout(() => {
+      if (user[target.id] !== target.value) {
+        $.when(apiCall('/user/update/', {
+          data: {
+            eId: user.eId,
+            [target.id]: target.value,
+          },
+          method: 'PUT',
+        })).done((data) => {
+          let message = 'An error occured. Please try again.';
+          let className = 'error';
+          if (data.status === 'success') {
+            message = 'User successfully updated';
+            className = 'success';
+            updateUsers();
+          }
+          this.setState({
+            snackbar: {
+              open: true,
+              message,
+              className,
+            },
+          });
+        });
+      }
+    }, 500, target, user, updateUsers);
+  }
+
   render() {
     const classes = this.props.classes;
     const user = this.props.user;
-    const dialogActions = (
-      <div>
-        <Button raised color='primary' className='text-center'>add group</Button>
-        <Button color='accent'>clear groups</Button>
-      </div>
-    );
-    const deleteGroup = (
-      <IconButton aria-label='Delete group'>
-        <Icon>delete</Icon>
-      </IconButton>
-    );
+    user.userGroups = user.userGroups ? user.userGroups : [];
     return (
       <CsuDialog
         open={this.props.open}
         onRequestClose={this.props.handleDialogToggle}
-        dialogActions={dialogActions}
         title='Edit User Account'
         >
         <div className='row'>
@@ -64,19 +102,21 @@ class EditUser extends Component {
         <div className='row'>
           <div className='col-md-6'>
             <TextField
-              id='first-name'
+              id='first_name'
               label='First Name'
               defaultValue={user.first_name}
               className={classes.input}
+              onChange={this.editUser.bind(this, user, this.props.updateUsers)}
               marginForm
               fullWidth
               />
           </div>
           <div className='col-md-6'>
             <TextField
-              id='last-name'
+              id='last_name'
               label='Last Name'
               defaultValue={user.last_name}
+              onChange={this.editUser.bind(this, user, this.props.updateUsers)}
               className={classes.input}
               marginForm
               fullWidth
@@ -98,7 +138,6 @@ class EditUser extends Component {
             <TextField
               label='eID'
               defaultValue={user.eId.toString()}
-              helperText='Updated automaticly on login'
               marginForm
               fullWidth
               disabled
@@ -127,16 +166,17 @@ class EditUser extends Component {
               />
           </div>
         </div>
-        <List>
-          <Divider/>
-          {user.userGroups.map((group)=>
-            <UserGroupListItem
-              key={group.user_group_type_id}
-              group={group}
-              listItemSecondaryAction={deleteGroup}
-              />
-          )}
-        </List>
+        <Divider/>
+        <ManageGroups
+          user={user}
+          updateUsers={this.props.updateUsers}
+          />
+        <CsuSnackbar
+          className={this.state.snackbar.className}
+          open={this.state.snackbar.open}
+          onRequestClose={this.handleSnackbarClose}
+          message={this.state.snackbar.message}
+          />
       </CsuDialog>
     );
   }
@@ -146,6 +186,8 @@ EditUser.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   handleDialogToggle: PropTypes.func.isRequired,
+  updateUsers: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styleSheet)(EditUser);
