@@ -13,7 +13,7 @@ import {
 } from 'material-ui/List';
 
 import EditUser from './EditUser';
-import defaultProfileImg from '../assets/images/default-profile.png';
+import defaultProfileImg from '../csu-app-template/assets/images/default-profile.png';
 
 class UserListItem extends Component {
   state = {

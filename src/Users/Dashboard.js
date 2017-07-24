@@ -19,7 +19,7 @@ import List from 'material-ui/List';
 import Icon from 'material-ui/Icon';
 import Button from 'material-ui/Button';
 
-import CsuDashboard from '../CsuDashboard';
+import CsuDashboard from '../csu-app-template/CsuDashboard';
 import TabContainer from '../TabContainer';
 import UserListItem from './UserListItem';
 import AddUser from './AddUser';
@@ -158,7 +158,7 @@ class UsersDashboard extends PureComponent {
             </List>
           </TabContainer>
           <TabContainer>
-            <Typography className='text-center' type='headline'>
+            <Typography className='text-center' type='display1'>
               Coming Soon!
             </Typography>
           </TabContainer>

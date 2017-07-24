@@ -14,7 +14,7 @@ import Typography from 'material-ui/Typography';
 import List from 'material-ui/List';
 import Icon from 'material-ui/Icon';
 
-import CsuDashboard from '../CsuDashboard';
+import CsuDashboard from '../csu-app-template/CsuDashboard';
 import FileGroupListItem from './FileGroupListItem';
 import groups from '../testData/fileGroupPermissions.json';
 

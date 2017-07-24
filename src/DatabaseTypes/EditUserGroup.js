@@ -6,7 +6,7 @@ import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
 
-import CsuDialog from '../CsuDialog';
+import CsuDialog from '../csu-app-template/CsuDialog';
 
 class EditUserGroup extends Component {
   render() {

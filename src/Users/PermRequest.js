@@ -20,7 +20,7 @@ import {
   DialogContentText,
 } from 'material-ui/Dialog';
 
-import CsuDialog from '../CsuDialog';
+import CsuDialog from '../csu-app-template/CsuDialog';
 import defaultProfileImg from '../assets/images/default-profile.png';
 
 const styleSheet = createStyleSheet('PermRequest', theme => ({

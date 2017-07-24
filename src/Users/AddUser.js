@@ -6,8 +6,8 @@ import $ from 'jquery';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 
-import CsuDialog from '../CsuDialog';
-import CsuSnackbar from '../CsuSnackbar';
+import CsuDialog from '../csu-app-template/CsuDialog';
+import CsuSnackbar from '../csu-app-template/CsuSnackbar';
 import apiCall from '../utils/apiCall';
 
 let inputTimeout = null;

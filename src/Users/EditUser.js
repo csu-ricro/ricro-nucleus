@@ -11,10 +11,10 @@ import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
 import Divider from 'material-ui/Divider';
 
-import CsuDialog from '../CsuDialog';
-import CsuSnackbar from '../CsuSnackbar';
+import CsuDialog from '../csu-app-template/CsuDialog';
+import CsuSnackbar from '../csu-app-template/CsuSnackbar';
 import ManageGroups from './ManageGroups';
-import defaultProfileImg from '../assets/images/default-profile.png';
+import defaultProfileImg from '../csu-app-template/assets/images/default-profile.png';
 import apiCall from '../utils/apiCall';
 
 const styleSheet = createStyleSheet('EditUser', theme => ({

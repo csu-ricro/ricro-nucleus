@@ -12,14 +12,13 @@ import List, {
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
-  ListSubheader,
 } from 'material-ui/List';
 import Switch from 'material-ui/Switch';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 
 import apiCall from '../utils/apiCall';
-import CsuSnackbar from '../CsuSnackbar';
+import CsuSnackbar from '../csu-app-template/CsuSnackbar';
 
 const styleSheet = createStyleSheet('ManageGroups', theme => ({
   userGroupSearch: {
@@ -80,16 +79,17 @@ class GroupListItem extends Component {
     }
     return (
       <ListItem
-        onClick={this.handleToggle}
-        button
+        onClick={this.props.manageMode ? this.handleToggle : null}
+        button={this.props.manageMode}
         >
         <ListItemText primary={this.props.group.alias} secondary={this.props.group.description} />
-        <ListItemSecondaryAction>
-          <Switch
-            onClick={this.handleToggle}
-            checked={this.state.checked}
-            />
-        </ListItemSecondaryAction>
+        {this.props.manageMode ? (
+          <ListItemSecondaryAction>
+            <Switch
+              checked={this.state.checked}
+              />
+          </ListItemSecondaryAction>
+        ) : null}
         <CsuSnackbar
           className={this.state.snackbar.className}
           open={this.state.snackbar.open}
@@ -120,12 +120,17 @@ class ManageGroups extends Component {
   }
 
   toggleManageMode = () => {
-    if (!this.state.manageMode) {
-      this.updateAllGroups();
+    if (this.state.manageMode) {
+      this.setState({
+        groups: {
+          ...this.state.groups,
+          search: this.state.groups.all,
+        }
+      })
     }
-
     this.setState({
       manageMode: !this.state.manageMode,
+      search: '',
     });
   }
 
@@ -168,14 +173,14 @@ class ManageGroups extends Component {
     return (
       <div className='row'>
         <div className='col-md-8 col-md-offset-2'>
-          <List subheader={<ListSubheader>User Groups</ListSubheader>}>
+          <List>
             <Button
               style={{width: '100%'}}
               color='primary'
               onClick={this.toggleManageMode}
               raised={this.state.manageMode}
               >
-              add group
+              manage groups
             </Button>
             {!this.state.manageMode ? null : (
               <TextField
