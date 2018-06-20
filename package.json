@@ -1,30 +1,40 @@
 {
-  "name": "ricro-apps-manager",
+  "name": "ricro-nucleus",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "bootstrap": "^3.3.7",
-    "classnames": "^2.2.5",
-    "font-awesome": "^4.7.0",
-    "jquery": "^3.2.1",
-    "material-ui": "^1.0.0-alpha.21",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-swipeable-views": "^0.12.3",
-    "react-tap-event-plugin": "^2.0.1"
+  "author": "CSU RICRO Team",
+  "description": "React based library that extends Material-UI's framework",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dlennox24/ricro-nucleus.git"
   },
-  "devDependencies": {
-    "react-scripts": "1.0.10"
+  "bugs": {
+    "url": "https://github.com/dlennox24/ricro-nucleus/issues"
   },
+  "homepage": "https://services.ricro.colostate.edu/nucleus/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "/",
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "@material-ui/core": "^1.2.2",
+    "bootstrap": "^4.1.1",
+    "classnames": "^2.2.6",
+    "colostate-ricro-ui": "^1.0.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^5.1.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "prettier": "^1.13.5"
   }
 }

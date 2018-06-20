@@ -1,26 +1,22 @@
 {
+  "appsRoot": "/apps/",
+  "api": {
+    "auth": "https://services.ricro.colostate.edu/auth/sso/",
+    "location": "https://services.ricro.colostate.edu/api/v2"
+  },
   "app": {
-    "name": "Apps Manager"
+    "basename": "/nucleus",
+    "name": "Nucleus",
+    "hasLogin": true,
+    "hasAutoLogin": false,
+    "userDefaultProfileImg": "https://services.ricro.colostate.edu/_static/img/default-profile.png"
   },
   "unit": {
     "name": "RICRO",
-    "site": "https://vpr.colostate.edu/ricro/",
+    "siteHref": "https://vpr.colostate.edu/ricro/",
     "contactHref": "https://vpr.colostate.edu/ricro/contact-us"
   },
-  "muiTheme": {
-    "palette": {
-      "primary1Color": "#1E4D2B",
-      "primary2Color": "#C8C372",
-      "primary3Color": "#59595B",
-      "accent1Color": "#D9782D",
-      "accent2Color": "#FFFFFF",
-      "accent3Color": "#105456"
-    }
-  },
-  "statusTheme": {
-    "danger": "#f44336",
-    "success": "#4caf50",
-    "info": "#03a9f4",
-    "warning": "#ff5722"
+  "defaultState": {
+    "login": {}
   }
 }
