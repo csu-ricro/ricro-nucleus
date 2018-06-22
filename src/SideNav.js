@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { withRouter, matchPath } from 'react-router';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import Icon from '@material-ui/core/Icon';
 import List from '@material-ui/core/List';
@@ -46,13 +45,13 @@ const ListItemWrapper = props => {
 
 ListItemWrapper.propTypes = {
   children: PropTypes.node,
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired, // MUI withStyles
   location: PropTypes.object.isRequired,
   to: PropTypes.string.isRequired,
 };
 
 const SideNav = props => {
-  const { classes } = props;
+  // const { classes } = props;
   return (
     <React.Fragment>
       <List>
@@ -62,17 +61,17 @@ const SideNav = props => {
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItemWrapper>
-        <ListItemWrapper {...props} to="/groups">
-          <ListItemIcon>
-            <Icon>group</Icon>
-          </ListItemIcon>
-          <ListItemText primary="Groups" />
-        </ListItemWrapper>
         <ListItemWrapper {...props} to="/users">
           <ListItemIcon>
             <Icon>person</Icon>
           </ListItemIcon>
           <ListItemText primary="Users" />
+        </ListItemWrapper>
+        <ListItemWrapper {...props} to="/backups">
+          <ListItemIcon>
+            <Icon>storage</Icon>
+          </ListItemIcon>
+          <ListItemText primary="Backups" />
         </ListItemWrapper>
         <ListItemWrapper {...props} to="/alerts">
           <ListItemIcon>
@@ -84,7 +83,9 @@ const SideNav = props => {
       <Divider />
       <List>
         <ListItemWrapper {...props} to="/type/user-groups">
-          <Avatar className={classes.avatar}>UG</Avatar>
+          <ListItemIcon>
+            <Icon>group</Icon>
+          </ListItemIcon>
           <ListItemText primary="User Group Types" />
         </ListItemWrapper>
       </List>
