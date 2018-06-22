@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -46,39 +45,46 @@ const styles = theme => ({
   },
 });
 
+const listItemFactory = (item, props) => (
+  <ListItem
+    key={item.id}
+    button
+    component={Link}
+    to={`/alerts/${item.id}`}
+    className={props.classes[item.type]}
+  >
+    <ListItemText
+      primary={item.title}
+      secondary={item.date}
+      primaryTypographyProps={{ noWrap: true }}
+      secondaryTypographyProps={{ noWrap: true }}
+    />
+    <ListItemSecondaryAction>
+      <IconButton component={Link} to={`/alerts/${item.id}`}>
+        <Icon>open_in_new</Icon>
+      </IconButton>
+    </ListItemSecondaryAction>
+  </ListItem>
+);
+
+listItemFactory.propTypes = { classes: PropTypes.object.isRequired };
+
 const Alerts = props => {
   const { classes } = props;
   return (
-    <Showcase icon="notifications" title="Alerts" viewMorePath="/alerts">
-      <List>
-        {data.map(n => (
-          <ListItem
-            key={n.id}
-            button
-            component={Link}
-            to={`/alerts/${n.id}`}
-            className={classes[n.type]}
-          >
-            <ListItemText
-              primary={n.title}
-              secondary={n.date}
-              primaryTypographyProps={{ noWrap: true }}
-              secondaryTypographyProps={{ noWrap: true }}
-            />
-            <ListItemSecondaryAction>
-              <IconButton component={Link} to={`/alerts/${n.id}`}>
-                <Icon>open_in_new</Icon>
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
-        ))}
-      </List>
-    </Showcase>
+    <Showcase
+      icon="notifications"
+      title="Alerts"
+      viewMorePath="/alerts"
+      data={data}
+      listItemProps={{ classes }}
+      listItemFactory={listItemFactory}
+    />
   );
 };
 
 Alerts.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired, // MUI withStyles
 };
 
 export default withStyles(styles)(Alerts);

@@ -2,7 +2,7 @@ import React from 'react';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import AlertsShowCase from './Showcase/Alerts';
-import UserGroupsShowCase from './Showcase/UserGroups';
+import BackupsShowcase from './Showcase/Backups';
 import UserGroupTypesShowCase from './Showcase/UserGroupTypes';
 import UsersShowCase from './Showcase/Users';
 
@@ -14,7 +14,7 @@ const Dashboard = () => {
           <UsersShowCase />
         </div>
         <div className="col-lg-4">
-          <UserGroupsShowCase />
+          <BackupsShowcase />
         </div>
         <div className="col-lg-4">
           <AlertsShowCase />

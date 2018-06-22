@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,19 +8,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import Showcase from './';
 
-const data = [
-  {
-    name: 'appsAdmin',
-    alias: 'Apps Admin',
-    description: 'Admins have full control over all other users',
-  },
-  { name: 'dev', alias: 'Developer', description: 'Developers have unrestricted access' },
-  {
-    name: 'protocolStatus',
-    alias: 'Protocol Status User',
-    description: 'Users can view, create, and update the requests in the Protocol Status app',
-  },
-];
+const data = [];
 
 const listItemFactory = (item, props) => (
   <ListItem key={item.name} button component={Link} to={props.locationBasename + item.name}>
@@ -40,19 +27,12 @@ const listItemFactory = (item, props) => (
 
 listItemFactory.propTypes = { locationBasename: PropTypes.string.isRequired };
 
-const styles = theme => ({
-  avatar: {
-    backgroundColor: theme.palette.csuBrand.primary.green,
-  },
-});
-
-const UserGroups = () => {
-  // const { classes } = props;
-  const locationBasename = '/type/user-groups/';
+const Backups = () => {
+  const locationBasename = '/backups/';
   return (
     <Showcase
-      icon="group"
-      title="User Groups Types"
+      icon="storage"
+      title="Backups"
       viewMorePath={locationBasename}
       data={data}
       listItemProps={{ locationBasename }}
@@ -61,8 +41,6 @@ const UserGroups = () => {
   );
 };
 
-UserGroups.propTypes = {
-  classes: PropTypes.object.isRequired, // MUI withStyles
-};
+Backups.propTypes = {};
 
-export default withStyles(styles)(UserGroups);
+export default Backups;
