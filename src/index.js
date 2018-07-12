@@ -10,8 +10,13 @@ import config from './config.json';
 import SideNav from './SideNav';
 import Dashboard from './Dashboard';
 import UserGroupTypes from './UserGroupTypes';
+import EditUserGroupType from './UserGroupTypes/Edit';
+import NewUserGroupType from './UserGroupTypes/New';
 import Users from './Users';
+import EditUser from './Users/Edit';
 import Alerts from './Alerts';
+import EditAlert from './Alerts/Edit';
+import NewAlert from './Alerts/New';
 import { version, name as appName, dependencies } from '../package.json';
 
 // eslint-disable-next-line no-console
@@ -23,8 +28,18 @@ console.log(
 const routes = [
   <Route key="dashboard" path="/" exact component={Dashboard} />,
   <Route key="groups" path="/type/user-groups" exact component={UserGroupTypes} />,
+  <Route
+    key="editUserGroupTypes"
+    path="/type/user-groups/edit/:userGroupTypeId"
+    exact
+    component={EditUserGroupType}
+  />,
+  <Route key="addUserGroupTypes" path="/type/user-groups/new" exact component={NewUserGroupType} />,
   <Route key="users" path="/users" exact component={Users} />,
+  <Route key="editUsers" path="/users/edit/:csuId" exact component={EditUser} />,
   <Route key="alerts" path="/alerts" exact component={Alerts} />,
+  <Route key="editAlerts" path="/alerts/edit/:alertId" exact component={EditAlert} />,
+  <Route key="addAlerts" path="/alerts/new" exact component={NewAlert} />,
 ];
 
 const reduxMiddleware =

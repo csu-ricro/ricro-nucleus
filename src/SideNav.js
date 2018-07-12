@@ -67,12 +67,6 @@ const SideNav = props => {
           </ListItemIcon>
           <ListItemText primary="Users" />
         </ListItemWrapper>
-        <ListItemWrapper {...props} to="/backups">
-          <ListItemIcon>
-            <Icon>storage</Icon>
-          </ListItemIcon>
-          <ListItemText primary="Backups" />
-        </ListItemWrapper>
         <ListItemWrapper {...props} to="/alerts">
           <ListItemIcon>
             <Icon>notifications</Icon>
@@ -95,7 +89,7 @@ const SideNav = props => {
 
 SideNav.propTypes = {
   classes: PropTypes.object.isRequired, // MUI withStyles
-  location: PropTypes.object.isRequired, // Redux withRouter
+  location: PropTypes.object.isRequired, // react-router withRouter
 };
 
 export default withRouter(withStyles(styles)(SideNav));
