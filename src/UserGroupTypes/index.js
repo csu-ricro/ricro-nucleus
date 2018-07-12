@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
@@ -109,6 +111,7 @@ class UserGroupTypes extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     const { data, sourceData } = this.state;
 
     return (
@@ -120,11 +123,23 @@ class UserGroupTypes extends React.Component {
           rowFactory={tableRowFactory}
           title="User Group Types"
           actions={
-            <Search
-              sourceData={sourceData}
-              onUpdateData={this.handleUpdateData}
-              searchKeys={['name', 'alias', 'description']}
-            />
+            <React.Fragment>
+              <Search
+                sourceData={sourceData}
+                onUpdateData={this.handleUpdateData}
+                searchKeys={['name', 'alias', 'description']}
+              />
+              <Tooltip title="Add Alert">
+                <IconButton
+                  className={classes.button}
+                  aria-label="Add User Group Type"
+                  component={Link}
+                  to="/type/user-groups/new"
+                >
+                  <Icon>add</Icon>
+                </IconButton>
+              </Tooltip>
+            </React.Fragment>
           }
         />
       </React.Fragment>
@@ -132,6 +147,8 @@ class UserGroupTypes extends React.Component {
   }
 }
 
-UserGroupTypes.propTypes = {};
+UserGroupTypes.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-export default UserGroupTypes;
+export default withStyles(styles)(UserGroupTypes);
