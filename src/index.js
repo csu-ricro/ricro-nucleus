@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route } from 'react-router-dom';
+import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
+import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 import App from 'colostate-ricro-ui';
 import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import registerServiceWorker from './registerServiceWorker';
@@ -30,7 +32,9 @@ const reduxMiddleware =
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
 ReactDOM.render(
-  <App config={config} routes={routes} SideNav={SideNav} reduxMiddleware={reduxMiddleware} />,
+  <MuiPickersUtilsProvider utils={MomentUtils}>
+    <App config={config} routes={routes} SideNav={SideNav} reduxMiddleware={reduxMiddleware} />
+  </MuiPickersUtilsProvider>,
   document.getElementById('root'),
 );
 
