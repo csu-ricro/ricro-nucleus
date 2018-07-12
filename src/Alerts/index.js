@@ -1,8 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
+import Tooltip from '@material-ui/core/Tooltip';
 import moment from 'moment';
 import Table from '../components/Table';
 import Search from '../components/Table/Search';
@@ -73,34 +76,40 @@ const demoData = [
 const columnData = [
   { id: 'title', numeric: false, disablePadding: false, label: 'Title' },
   { id: 'type', numeric: false, disablePadding: false, label: 'Type' },
-  { id: 'timestamp', numeric: false, disablePadding: false, label: 'Date' },
+  { id: 'date', numeric: false, disablePadding: false, label: 'Date' },
   { id: 'locationRegex', numeric: false, disablePadding: false, label: 'Location Regex' },
   { id: 'action', numeric: false, disablePadding: false, label: 'Action' },
   { id: 'actions', numeric: true, disablePadding: false, label: 'Actions' },
 ];
 
 const tableRowFactory = row => {
+  const to = `/alerts/edit/${row.timestamp}`;
   return (
     <React.Fragment>
-      <TableCell component="th" scope="row">
-        {row.title}
-      </TableCell>
-      <TableCell>
+      <LinkedTableCell to={to}>{row.title}</LinkedTableCell>
+      <LinkedTableCell to={to}>
         <TypeChip type={row.type} />
-      </TableCell>
-      <TableCell>{moment(row.timestamp).format('dddd, MMMM Do, YYYY')}</TableCell>
-      <TableCell>{row.locationRegex}</TableCell>
-      <TableCell>
-        <a href={row.action.location}>{row.action.title}</a>
-      </TableCell>
+      </LinkedTableCell>
+      <LinkedTableCell>{moment(row.timestamp).format('dddd, MMMM Do, YYYY')}</LinkedTableCell>
+      <LinkedTableCell to={to}>
+        <code>{row.locationRegex}</code>
+      </LinkedTableCell>
+      <LinkedTableCell>{`[${row.action.title}](${row.action.location})`}</LinkedTableCell>
       <TableCell numeric>
-        <IconButton component={Link} to={`/alerts/edit/${row.timestamp}`}>
+        <IconButton component={Link} to={to}>
           <Icon>open_in_new</Icon>
         </IconButton>
       </TableCell>
     </React.Fragment>
   );
 };
+
+const styles = theme => ({
+  button: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+});
 
 class Alerts extends React.Component {
   state = {
@@ -115,6 +124,7 @@ class Alerts extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     const { data, sourceData } = this.state;
 
     return (
@@ -122,15 +132,27 @@ class Alerts extends React.Component {
         <Table
           columnData={columnData}
           data={data || sourceData}
-          defaults={{ order: 'asc', orderBy: 'date' }}
+          defaults={{ order: 'desc', orderBy: 'title' }}
           rowFactory={tableRowFactory}
           title="Alerts"
           actions={
-            <Search
-              sourceData={sourceData}
-              onUpdateData={this.handleUpdateData}
-              searchKeys={['title', 'locationRegex']}
-            />
+            <React.Fragment>
+              <Search
+                sourceData={sourceData}
+                onUpdateData={this.handleUpdateData}
+                searchKeys={['title', 'locationRegex']}
+              />
+              <Tooltip title="Add Alert">
+                <IconButton
+                  className={classes.button}
+                  aria-label="Add Alert"
+                  component={Link}
+                  to="/alerts/new"
+                >
+                  <Icon>add</Icon>
+                </IconButton>
+              </Tooltip>
+            </React.Fragment>
           }
         />
       </React.Fragment>
@@ -139,7 +161,7 @@ class Alerts extends React.Component {
 }
 
 Alerts.propTypes = {
-  // classes: PropTypes.object.isRequired, // MUI withStyles
+  classes: PropTypes.object.isRequired, // MUI withStyles
 };
 
-export default Alerts;
+export default withStyles(styles)(Alerts);
