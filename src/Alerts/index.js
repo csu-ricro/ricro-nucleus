@@ -4,8 +4,9 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
 import moment from 'moment';
-import Table from '../Table';
-import Search from '../Table/Search';
+import Table from '../components/Table';
+import Search from '../components/Table/Search';
+import LinkedTableCell from '../components/Table/LinkedTableCell';
 import TypeChip from './TypeChip';
 
 function createData(type, title, message, timestamp, locationRegex, action) {

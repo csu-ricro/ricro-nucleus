@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
-import Table from '../Table';
-import Search from '../Table/Search';
+import Tooltip from '@material-ui/core/Tooltip';
+import Table from '../components/Table';
+import Search from '../components/Table/Search';
+import LinkedTableCell from '../components/Table/LinkedTableCell';
 
 let counter = 0;
 function createData(name, alias, numberUsers, description) {
@@ -68,21 +70,31 @@ const columnData = [
   { id: 'actions', numeric: true, disablePadding: false, label: 'Actions' },
 ];
 
-const tableRowFactory = row => (
-  <React.Fragment>
-    <TableCell component="th" scope="row">
-      {row.name}
-    </TableCell>
-    <TableCell>{row.alias}</TableCell>
-    <TableCell numeric>{row.numberUsers}</TableCell>
-    <TableCell>{row.description}</TableCell>
-    <TableCell numeric>
-      <IconButton component={Link} to={`/type/user-groups/edit/${row.name}`}>
-        <Icon>open_in_new</Icon>
-      </IconButton>
-    </TableCell>
-  </React.Fragment>
-);
+const tableRowFactory = row => {
+  const to = `/type/user-groups/edit/${row.name}`;
+  return (
+    <React.Fragment>
+      <LinkedTableCell to={to}>{row.name}</LinkedTableCell>
+      <LinkedTableCell to={to}>{row.alias}</LinkedTableCell>
+      <LinkedTableCell to={to} numeric>
+        {row.numberUsers}
+      </LinkedTableCell>
+      <LinkedTableCell to={to}>{row.description}</LinkedTableCell>
+      <TableCell numeric>
+        <IconButton component={Link} to={to}>
+          <Icon>open_in_new</Icon>
+        </IconButton>
+      </TableCell>
+    </React.Fragment>
+  );
+};
+
+const styles = theme => ({
+  button: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+  },
+});
 
 class UserGroupTypes extends React.Component {
   state = {

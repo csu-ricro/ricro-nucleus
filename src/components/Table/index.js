@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -91,7 +92,7 @@ class EnhancedTable extends React.Component {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   return (
-                    <TableRow hover key={n.id}>
+                    <TableRow key={n.id} hover>
                       {rowFactory(n)}
                     </TableRow>
                   );
@@ -142,8 +143,9 @@ EnhancedTable.propTypes = {
     order: PropTypes.string.isRequired,
     orderBy: PropTypes.string.isRequired,
   }),
+  history: PropTypes.object.isRequired, // react-router withRouter
   rowFactory: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles)(EnhancedTable);
+export default withRouter(withStyles(styles)(EnhancedTable));

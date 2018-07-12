@@ -8,8 +8,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import TableCell from '@material-ui/core/TableCell';
 import moment from 'moment';
-import Table from '../Table';
-import Search from '../Table/Search';
+import Table from '../components/Table';
+import Search from '../components/Table/Search';
+import LinkedTableCell from '../components/Table/LinkedTableCell';
 
 function createData(csuId, eId, firstName, lastName, displayName, email, profileImg, lastActive) {
   return { id: csuId, csuId, eId, firstName, lastName, displayName, email, profileImg, lastActive };
