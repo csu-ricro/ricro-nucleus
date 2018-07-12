@@ -59,25 +59,30 @@ const columnData = [
 ];
 
 const tableRowFactory = row => {
+  const to = `/users/edit/${row.csuId}`;
   return (
     <React.Fragment>
-      <TableCell component="th" scope="row">
+      <LinkedTableCell to={to}>
         <ListItem dense>
           <ListItemIcon>
             <Avatar src={row.profileImg} />
           </ListItemIcon>
           <ListItemText primary={row.displayName} />
         </ListItem>
-      </TableCell>
-      <TableCell numeric>{row.csuId}</TableCell>
-      <TableCell>{row.eId}</TableCell>
-      <TableCell>{`${row.lastName}, ${row.firstName}`}</TableCell>
-      <TableCell>
+      </LinkedTableCell>
+      <LinkedTableCell to={to} numeric>
+        {row.csuId}
+      </LinkedTableCell>
+      <LinkedTableCell to={to}>{row.eId}</LinkedTableCell>
+      <LinkedTableCell to={to}>{`${row.lastName}, ${row.firstName}`}</LinkedTableCell>
+      <LinkedTableCell to={to}>
         <a href={`mailto:${row.email}`}>{row.email}</a>
-      </TableCell>
-      <TableCell>{moment(row.lastActive).format('dddd, MMMM Do, YYYY')}</TableCell>
+      </LinkedTableCell>
+      <LinkedTableCell to={to}>
+        {moment(row.lastActive).format('dddd, MMMM Do, YYYY')}
+      </LinkedTableCell>
       <TableCell numeric>
-        <IconButton component={Link} to={`/users/edit/${row.csuId}`}>
+        <IconButton component={Link} to={to}>
           <Icon>open_in_new</Icon>
         </IconButton>
       </TableCell>
@@ -105,7 +110,7 @@ class Users extends React.Component {
         <Table
           columnData={columnData}
           data={data || sourceData}
-          defaults={{ order: 'asc', orderBy: 'lastName' }}
+          defaults={{ order: 'asc', orderBy: 'csuId' }}
           rowFactory={tableRowFactory}
           title="Users"
           actions={
