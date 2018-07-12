@@ -11,6 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import Icon from '@material-ui/core/Icon';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
+import ListItemFactory from './ListItemFactory';
 
 const styles = theme => ({
   avatar: {
@@ -49,13 +50,13 @@ const styles = theme => ({
 const CardShowcase = props => {
   const {
     avatarProps,
+    basename,
     classes,
     data,
+    disableAddNewButton,
+    disableViewMoreButton,
     icon,
-    listItemFactory,
-    listItemProps,
     title,
-    viewMorePath,
   } = props;
   return (
     <Card className={classes.card}>
@@ -80,12 +81,35 @@ const CardShowcase = props => {
               {`No ${title.charAt(title.length - 1) === 's' ? title : `${title}s`} found`}
             </Typography>
           ) : (
-            <List>{data.map(n => listItemFactory(n, listItemProps))}</List>
+            <List>
+              {data.map(itemProps => <ListItemFactory {...itemProps} basename={basename} />)}
+            </List>
           )}
         </div>
-        <Button component={Link} to={viewMorePath} fullWidth>
-          view More
-        </Button>
+        {(!disableViewMoreButton || !disableAddNewButton) && (
+          <div className="row justify-content-center">
+            {!disableViewMoreButton && (
+              <div className={disableAddNewButton ? 'col-md-12' : 'col-md-6'}>
+                <Button variant="outlined" color="primary" component={Link} to={basename} fullWidth>
+                  view More
+                </Button>
+              </div>
+            )}
+            {!disableAddNewButton && (
+              <div className={disableViewMoreButton ? 'col-md-12' : 'col-md-6'}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  component={Link}
+                  to={`${basename}/new`}
+                  fullWidth
+                >
+                  Add New
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
@@ -93,13 +117,13 @@ const CardShowcase = props => {
 
 CardShowcase.propTypes = {
   avatarProps: PropTypes.object,
+  basename: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired, // MUI withStyles
   data: PropTypes.array.isRequired,
+  disableAddNewButton: PropTypes.bool,
+  disableViewMoreButton: PropTypes.bool,
   icon: PropTypes.string,
-  listItemFactory: PropTypes.func.isRequired,
-  listItemProps: PropTypes.object,
   title: PropTypes.string.isRequired,
-  viewMorePath: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(CardShowcase);

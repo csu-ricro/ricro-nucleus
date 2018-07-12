@@ -1,20 +1,16 @@
 import React from 'react';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import AlertsShowCase from './Showcase/Alerts';
-import BackupsShowcase from './Showcase/Backups';
-import UserGroupTypesShowCase from './Showcase/UserGroupTypes';
-import UsersShowCase from './Showcase/Users';
+import AlertsShowCase from './Alerts';
+import UserGroupTypesShowCase from './UserGroupTypes';
+import UsersShowCase from './Users';
 
 const Dashboard = () => {
   return (
     <React.Fragment>
-      <div className="row">
+      <div className="row justify-content-center">
         <div className="col-lg-4">
           <UsersShowCase />
-        </div>
-        <div className="col-lg-4">
-          <BackupsShowcase />
         </div>
         <div className="col-lg-4">
           <AlertsShowCase />
