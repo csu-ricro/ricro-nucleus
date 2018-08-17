@@ -35,7 +35,7 @@ const groups = [
   },
 ];
 
-class EditUser extends React.Component {
+class AddGroup extends React.Component {
   state = {
     open: false,
   };
@@ -95,9 +95,9 @@ class EditUser extends React.Component {
   }
 }
 
-EditUser.propTypes = {
+AddGroup.propTypes = {
   classes: PropTypes.object.isRequired, // MUI withStyles
-  match: PropTypes.object.isRequired, // react-router
+  // match: PropTypes.object.isRequired, // react-router
 };
 
-export default withStyles(styles)(EditUser);
+export default withStyles(styles)(AddGroup);

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter, matchPath } from 'react-router';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Icon from '@material-ui/core/Icon';
@@ -32,7 +33,7 @@ class ModifyUserGroupType extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, location } = this.props;
     const { name, alias, description } = this.state;
     return (
       <React.Fragment>
@@ -42,13 +43,17 @@ class ModifyUserGroupType extends React.Component {
               <div className="col-md-6">
                 <TextField
                   label="Name"
-                  helperText="Use lowerCamelCase"
                   margin="normal"
                   value={name}
                   inputProps={{
                     'data-statekey': 'name',
                   }}
                   onChange={this.handleUpdateState()}
+                  disabled={Boolean(
+                    matchPath(location.pathname, {
+                      path: '/type/user-groups/edit',
+                    }),
+                  )}
                   fullWidth
                 />
               </div>
@@ -96,7 +101,8 @@ class ModifyUserGroupType extends React.Component {
 
 ModifyUserGroupType.propTypes = {
   classes: PropTypes.object.isRequired, // MUI withStyles
+  location: PropTypes.object.isRequired, // react-router
   userGroupTypeId: PropTypes.string,
 };
 
-export default withStyles(styles)(ModifyUserGroupType);
+export default withRouter(withStyles(styles)(ModifyUserGroupType));

@@ -6,6 +6,7 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
 import Tooltip from '@material-ui/core/Tooltip';
+import axios from 'axios';
 import Table from '../components/Table';
 import Search from '../components/Table/Search';
 import LinkedTableCell from '../components/Table/LinkedTableCell';
@@ -98,6 +99,16 @@ const styles = theme => ({
   },
 });
 
+function onUploadProgress(ev) {
+  console.log(ev);
+  // do your thing here
+}
+
+function onDownloadProgress(ev) {
+  console.log(ev);
+  // do your thing here
+}
+
 class UserGroupTypes extends React.Component {
   state = {
     sourceData: demoData,
@@ -105,6 +116,21 @@ class UserGroupTypes extends React.Component {
   };
 
   handleUpdateData = data => {
+    axios.defaults.baseURL = 'https://services.ricro.colostate.edu/api/v2';
+    axios.interceptors.request.use(config => ({
+      ...config,
+      onUploadProgress,
+      onDownloadProgress,
+    }));
+    axios
+      .get('/protocol-status/requests')
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    debugger //eslint-disable-line
     this.setState({
       data,
     });

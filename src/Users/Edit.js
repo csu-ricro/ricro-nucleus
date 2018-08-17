@@ -17,6 +17,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import config from '../config.json';
 import AddGroup from './AddGroup';
+import DeleteUser from './Delete';
 
 const transition = {
   transition: '.5s ease',
@@ -37,6 +38,14 @@ const styles = theme => ({
   card: {
     height: 350,
     marginTop: -100,
+  },
+  deleteButton: {
+    marginTop: theme.spacing.unit * 3,
+    color: theme.palette.getContrastText(theme.palette.alerts.danger),
+    backgroundColor: theme.palette.alerts.danger,
+    '&:hover': {
+      backgroundColor: 'red',
+    },
   },
   profileImg: {
     ...transition,
@@ -132,6 +141,7 @@ class EditUser extends React.Component {
                 <Icon>edit</Icon>
               </Button>
             </div>
+            <DeleteUser />
           </Grid>
           <Grid item xs={12} md={9}>
             <Toolbar className={classes.toolbarRoot} disableGutters>
@@ -241,7 +251,7 @@ class EditUser extends React.Component {
 
 EditUser.propTypes = {
   classes: PropTypes.object.isRequired, // MUI withStyles
-  match: PropTypes.object.isRequired, // react-router
+  // match: PropTypes.object.isRequired, // react-router
 };
 
 export default withStyles(styles)(EditUser);

@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 const styles = theme => ({
   root: {
     padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
-    color: theme.palette.common.white,
     flexWrap: 'wrap',
   },
   spacer: {
@@ -38,7 +37,7 @@ class EnhancedTableToolbar extends React.Component {
 
     return (
       <React.Fragment>
-        <AppBar position="static" color="default">
+        <AppBar position="static" color="default" elevation={0}>
           <Toolbar className={classes.root}>
             <div className={classes.title}>
               <Typography variant="display1" id="tableTitle">

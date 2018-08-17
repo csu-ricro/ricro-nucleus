@@ -12,6 +12,7 @@ import Fuse from 'fuse.js';
 const styles = () => ({
   field: {
     width: 350,
+    verticalAlign: 'middle',
   },
 });
 
