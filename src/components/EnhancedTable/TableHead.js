@@ -10,22 +10,13 @@ import React from 'react';
 const HeaderCell = withStyles(() => ({ head: { fontSize: '1rem' } }))(TableCell);
 
 class EnhancedTableHead extends React.Component {
-  createSortHandler = property => event => {
-    this.props.onRequestSort(event, property);
+  createSortHandler = property => () => {
+    this.props.onRequestSort(property);
   };
 
-  createTableSortLabel = (column, order, orderBy) => (
-    <TableSortLabel
-      active={orderBy === column.id}
-      direction={order}
-      onClick={!column.disableSort ? this.createSortHandler(column.id) : null}
-    >
-      {column.label}
-    </TableSortLabel>
-  );
-
   render() {
-    const { columnData, order, orderBy } = this.props;
+    const { order, orderBy } = this.props.enhancedTable.rootState;
+    const { columnData } = this.props.enhancedTable.rootProps;
 
     return (
       <TableHead>
@@ -34,13 +25,19 @@ class EnhancedTableHead extends React.Component {
             column.disableSort = column.disableSort || false;
             return (
               <HeaderCell
+                {...column.tableCellProps}
                 key={column.id}
                 sortDirection={orderBy === column.id && !column.disableSort ? order : false}
-                {...column.tableCellProps}
               >
                 {!column.disableSort ? (
                   <Tooltip title={`Sort by ${column.label}`} enterDelay={300}>
-                    {this.createTableSortLabel(column, order, orderBy)}
+                    <TableSortLabel
+                      active={orderBy === column.id}
+                      direction={order}
+                      onClick={!column.disableSort ? this.createSortHandler(column.id) : null}
+                    >
+                      {column.label}
+                    </TableSortLabel>
                   </Tooltip>
                 ) : (
                   column.label
@@ -55,17 +52,23 @@ class EnhancedTableHead extends React.Component {
 }
 
 EnhancedTableHead.propTypes = {
-  columnData: PropTypes.arrayOf(
-    PropTypes.shape({
-      disableSort: PropTypes.bool,
-      id: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      tableCellProps: PropTypes.object,
+  enhancedTable: PropTypes.shape({
+    rootProps: PropTypes.shape({
+      columnData: PropTypes.arrayOf(
+        PropTypes.shape({
+          disableSort: PropTypes.bool,
+          id: PropTypes.string.isRequired,
+          label: PropTypes.string.isRequired,
+          tableCellProps: PropTypes.object,
+        }),
+      ),
     }),
-  ),
+    rootState: PropTypes.shape({
+      order: PropTypes.string.isRequired,
+      orderBy: PropTypes.string.isRequired,
+    }),
+  }),
   onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
 };
 
 export default EnhancedTableHead;

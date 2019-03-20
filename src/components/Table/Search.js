@@ -1,13 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
-import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fuse from 'fuse.js';
+import _ from 'lodash';
+import MdiClose from 'mdi-material-ui/Close';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const styles = () => ({
   field: {
@@ -19,11 +20,9 @@ const styles = () => ({
 class Search extends React.Component {
   state = {
     value: '',
-    sourceData: this.props.sourceData,
   };
 
   handleSearch = event => {
-    const { sourceData } = this.state;
     const value = event.target.value;
     let searchValue = value;
     let threshold = 0.5;
@@ -39,19 +38,16 @@ class Search extends React.Component {
       minMatchCharLength: 2,
       keys: this.props.searchKeys,
     };
-    const searchResult = new Fuse(sourceData, fuseOptions).search(searchValue);
-    this.setState({
-      value,
-    });
-    this.props.onUpdateData(_.isEmpty(value) ? sourceData : searchResult);
+    const searchResult = new Fuse(this.props.sourceData, fuseOptions).search(searchValue);
+    this.setState({ value });
+    this.props.onUpdateData(_.isEmpty(value) ? this.props.sourceData : searchResult);
   };
 
   handleResetSearch = () => {
-    this.setState({
-      value: '',
-    });
-    this.props.onUpdateData(this.state.sourceData);
+    this.setState({ value: '' });
+    this.props.onUpdateData(this.props.sourceData);
   };
+
   render() {
     const { classes } = this.props;
     const { value } = this.state;
@@ -70,7 +66,7 @@ class Search extends React.Component {
             <InputAdornment position="end">
               <Tooltip title="Clear">
                 <IconButton onClick={this.handleResetSearch}>
-                  <Icon>clear</Icon>
+                  <MdiClose />
                 </IconButton>
               </Tooltip>
             </InputAdornment>

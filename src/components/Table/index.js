@@ -1,24 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
-import { withRouter } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
-//
+import PropTypes from 'prop-types';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 import EnhancedTableHead from './Head';
+import EnhancedTableBody from './TableBody';
 import EnhancedTableToolbar from './Toolbar';
-
-function getSorting(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => (b[orderBy] < a[orderBy] ? -1 : 1)
-    : (a, b) => (a[orderBy] < b[orderBy] ? -1 : 1);
-}
 
 const styles = theme => ({
   root: {
@@ -38,24 +27,20 @@ const styles = theme => ({
 });
 
 class EnhancedTable extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      order: this.props.defaults.order,
-      orderBy: this.props.defaults.orderBy,
-      selected: [],
-      page: 0,
-      rowsPerPage: 10,
-    };
-  }
+  state = {
+    order: this.props.defaults.order,
+    orderBy: this.props.defaults.orderBy,
+    selected: [],
+    page: 0,
+    rowsPerPage: 10,
+  };
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
-    let order = 'desc';
+    let order = 'asc';
 
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
+    if (this.state.orderBy === property && this.state.order === 'asc') {
+      order = 'desc';
     }
 
     this.setState({ order, orderBy });
@@ -70,10 +55,8 @@ class EnhancedTable extends React.Component {
   };
 
   render() {
-    const { data, actions, classes, columnData, rowFactory, title } = this.props;
+    const { data, actions, classes, columnData, title } = this.props;
     const { order, orderBy, selected, rowsPerPage, page } = this.state;
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-    const rowHeight = 57;
 
     return (
       <Paper className={classes.root}>
@@ -86,33 +69,7 @@ class EnhancedTable extends React.Component {
               order={order}
               orderBy={orderBy}
             />
-            <TableBody>
-              {data
-                .sort(getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(n => {
-                  return (
-                    <TableRow key={n.id} hover>
-                      {rowFactory(n)}
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 &&
-                !_.isEmpty(data) && (
-                  <TableRow style={{ height: rowHeight * emptyRows }}>
-                    <TableCell colSpan={columnData.length} />
-                  </TableRow>
-                )}
-              {_.isEmpty(data) && (
-                <TableRow style={{ height: rowHeight * emptyRows }}>
-                  <TableCell colSpan={columnData.length}>
-                    <Typography variant="headline" className={classes.notFound}>
-                      {`No ${title.charAt(title.length - 1) === 's' ? title : `${title}s`} found`}
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
+            <EnhancedTableBody parentProps={this.props} parentState={this.state} />
           </Table>
         </div>
         <TablePagination
@@ -120,12 +77,8 @@ class EnhancedTable extends React.Component {
           count={data.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
+          backIconButtonProps={{ 'aria-label': 'Previous Page' }}
+          nextIconButtonProps={{ 'aria-label': 'Next Page' }}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
@@ -133,6 +86,10 @@ class EnhancedTable extends React.Component {
     );
   }
 }
+
+EnhancedTable.defaultProps = {
+  data: [],
+};
 
 EnhancedTable.propTypes = {
   actions: PropTypes.node,
@@ -143,8 +100,6 @@ EnhancedTable.propTypes = {
     order: PropTypes.string.isRequired,
     orderBy: PropTypes.string.isRequired,
   }),
-  history: PropTypes.object.isRequired, // react-router withRouter
-  rowFactory: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };
 

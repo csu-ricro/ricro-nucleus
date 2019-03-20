@@ -1,35 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import { withStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const styles = theme => ({
+  actions: { color: theme.palette.text.secondary },
   root: {
     padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
     flexWrap: 'wrap',
   },
-  spacer: {
-    flex: 'auto',
-  },
-  actions: {
-    color: theme.palette.text.secondary,
-  },
-  title: {
-    flex: '0 0 auto',
-  },
+  spacer: { flex: 'auto' },
+  title: { flex: '0 0 auto' },
 });
 
 class EnhancedTableToolbar extends React.Component {
-  state = {
-    isFilterOpen: false,
-  };
+  state = { isFilterOpen: false };
 
   handleFilterToggle = () => {
-    this.setState({
-      isFilterOpen: !this.state.isFilterOpen,
-    });
+    this.setState(state => ({
+      isFilterOpen: !state.isFilterOpen,
+    }));
   };
 
   render() {
@@ -40,7 +32,7 @@ class EnhancedTableToolbar extends React.Component {
         <AppBar position="static" color="default" elevation={0}>
           <Toolbar className={classes.root}>
             <div className={classes.title}>
-              <Typography variant="display1" id="tableTitle">
+              <Typography color="inherit" variant="h4" id="tableTitle">
                 {title}
               </Typography>
             </div>
