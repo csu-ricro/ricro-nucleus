@@ -4,7 +4,10 @@ import MdiViewDashboard from 'mdi-material-ui/ViewDashboard';
 import React from 'react';
 
 export default {
+  api: { host: 'http://localhost' },
+  auth: { host: 'http://localhost' },
   app: {
+    basename: '/apps/nucleus',
     name: 'Nucleus',
     hasAutoLogin: true,
     nav: [

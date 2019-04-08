@@ -2,6 +2,7 @@
   "name": "ricro-nucleus",
   "version": "1.0.0-alpha.0",
   "private": true,
+  "homepage": "/apps/nucleus",
   "dependencies": {
     "colostate-ricro-ui": "^3.4.0",
     "csv-parse": "^4.3.4",
