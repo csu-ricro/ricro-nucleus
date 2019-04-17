@@ -8,13 +8,12 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
-import { HttpError } from 'colostate-ricro-ui';
+import { HttpError, LoadingIndicator } from 'colostate-ricro-ui';
 import MdiKeyboardBackspace from 'mdi-material-ui/KeyboardBackspace';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import LoadingIndicator from '../../../components/LoadingIndicator';
 import UsersList from './UsersList';
 
 const styles = theme => ({

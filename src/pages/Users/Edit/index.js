@@ -1,13 +1,12 @@
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
-import { HttpError, UserProfile } from 'colostate-ricro-ui';
+import { HttpError, LoadingIndicator, UserProfile } from 'colostate-ricro-ui';
 import MdiKeyboardBackspace from 'mdi-material-ui/KeyboardBackspace';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import LoadingIndicator from '../../../components/LoadingIndicator';
 
 class EditUser extends React.Component {
   state = {

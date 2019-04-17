@@ -1,10 +1,10 @@
 {
   "name": "ricro-nucleus",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.2",
   "private": true,
   "homepage": "/apps/nucleus",
   "dependencies": {
-    "colostate-ricro-ui": "^3.4.0",
+    "colostate-ricro-ui": "^3.5.2",
     "csv-parse": "^4.3.4",
     "fuse.js": "^3.4.2",
     "moment": "^2.24.0",

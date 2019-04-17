@@ -1,10 +1,12 @@
-import { Button, Divider, Tooltip } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import MdiAccount from 'mdi-material-ui/Account';
 import MdiAccountGroup from 'mdi-material-ui/AccountGroup';

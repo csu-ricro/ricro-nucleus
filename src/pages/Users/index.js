@@ -6,7 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
-import { defaultProfileSvg } from 'colostate-ricro-ui';
+import { ApiTable, defaultProfileSvg } from 'colostate-ricro-ui';
 import MdiAccountPlus from 'mdi-material-ui/AccountPlus';
 import MdiOpenInApp from 'mdi-material-ui/OpenInApp';
 import moment from 'moment';
@@ -15,8 +15,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import Table from '../../components/EnhancedTable';
-import LinkedTableCell from '../../components/Table/LinkedTableCell';
 
 const columnData = [
   { id: 'displayName', label: 'Display Name' },
@@ -36,7 +34,7 @@ const searchKeys = [
 ].sort((a, b) => (a.label < b.label ? -1 : 1));
 
 const UserGroupTypes = ({ api, location }) => (
-  <Table
+  <ApiTable
     ariaTableId="user-table"
     columnData={columnData}
     endpoint="/nucleus/users/"
@@ -50,25 +48,21 @@ const UserGroupTypes = ({ api, location }) => (
       const to = `${location.pathname}/edit/${row.csuId}`;
       return (
         <TableRow hover>
-          <LinkedTableCell to={to}>
+          <TableCell>
             <ListItem dense>
               <ListItemIcon>
                 <Avatar src={row.profileImage ? api.host + row.profileImage : defaultProfileSvg} />
               </ListItemIcon>
               <ListItemText primary={row.displayName} />
             </ListItem>
-          </LinkedTableCell>
-          <LinkedTableCell to={to} align="right">
-            {row.csuId}
-          </LinkedTableCell>
-          <LinkedTableCell to={to}>{row.eId}</LinkedTableCell>
-          <LinkedTableCell to={to}>{`${row.lastName}, ${row.firstName}`}</LinkedTableCell>
-          <LinkedTableCell to={to}>
-            <a href={`mailto:${row.email}`}>{row.email}</a>
-          </LinkedTableCell>
-          <LinkedTableCell to={to}>
-            {moment(row.lastActive).format('dddd, MMMM Do, YYYY')}
-          </LinkedTableCell>
+          </TableCell>
+          <TableCell align="right">{row.csuId}</TableCell>
+          <TableCell>{row.eId}</TableCell>
+          <TableCell>
+            {(row.lastName || row.firstName) && `${row.lastName}, ${row.firstName}`}
+          </TableCell>
+          <TableCell>{row.email && <a href={`mailto:${row.email}`}>{row.email}</a>}</TableCell>
+          <TableCell>{moment(row.lastActive).format('dddd, MMMM Do, YYYY')}</TableCell>
           <TableCell align="center">
             <Tooltip title={`View ${row.displayName}'s profile`}>
               <IconButton component={Link} to={to}>
@@ -79,7 +73,7 @@ const UserGroupTypes = ({ api, location }) => (
         </TableRow>
       );
     }}
-  </Table>
+  </ApiTable>
 );
 
 UserGroupTypes.propTypes = {

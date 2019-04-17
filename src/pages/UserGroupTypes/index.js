@@ -2,13 +2,12 @@ import IconButton from '@material-ui/core/IconButton';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Tooltip from '@material-ui/core/Tooltip';
+import { ApiTable } from 'colostate-ricro-ui';
 import MdiOpenInApp from 'mdi-material-ui/OpenInApp';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import Table from '../../components/EnhancedTable';
-import LinkedTableCell from '../../components/Table/LinkedTableCell';
 
 const columnData = [
   { id: 'id', label: 'ID' },
@@ -22,7 +21,7 @@ const searchKeys = columnData.filter(data => {
 });
 
 const UserGroupTypes = ({ location }) => (
-  <Table
+  <ApiTable
     ariaTableId="user-group-types-table"
     columnData={columnData}
     disableAdd
@@ -35,12 +34,10 @@ const UserGroupTypes = ({ location }) => (
       const to = `${location.pathname}/edit/${row.id}`;
       return (
         <TableRow hover>
-          <LinkedTableCell to={to}>{row.id}</LinkedTableCell>
-          <LinkedTableCell to={to}>{row.alias}</LinkedTableCell>
-          <LinkedTableCell to={to}>{row.description}</LinkedTableCell>
-          <LinkedTableCell to={to} align="right">
-            {row.userCount}
-          </LinkedTableCell>
+          <TableCell>{row.id}</TableCell>
+          <TableCell>{row.alias}</TableCell>
+          <TableCell>{row.description}</TableCell>
+          <TableCell align="right">{row.userCount}</TableCell>
           <TableCell align="center">
             <Tooltip title={`View ${row.id}`}>
               <IconButton component={Link} to={to}>
@@ -51,7 +48,7 @@ const UserGroupTypes = ({ location }) => (
         </TableRow>
       );
     }}
-  </Table>
+  </ApiTable>
 );
 
 UserGroupTypes.propTypes = {

@@ -1,10 +1,10 @@
-import { Tooltip } from '@material-ui/core';
 import Collapse from '@material-ui/core/Collapse';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
+import Tooltip from '@material-ui/core/Tooltip';
 import classNames from 'classnames';
 import MdiAccountCheck from 'mdi-material-ui/AccountCheck';
 import MdiAccountQuestion from 'mdi-material-ui/AccountQuestion';
